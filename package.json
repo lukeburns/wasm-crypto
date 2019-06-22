@@ -1,4 +1,5 @@
 {
+    "name": "wasm-crypto",
     "scripts": {
         "asbuild:untouched": "asc assembly/index.ts assembly/crypto.ts assembly/precomp.ts -b build/untouched.wasm --importMemory",
         "asbuild:small": "asc assembly/index.ts assembly/crypto.ts assembly/precomp.ts -b build/small.wasm -t build/small.wat --sourceMap --validate -O3z --importMemory",
