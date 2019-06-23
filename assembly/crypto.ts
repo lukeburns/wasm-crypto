@@ -2,7 +2,6 @@
 /// <reference path="../node_modules/assemblyscript/index.d.ts" />
 
 import { precompBase } from './precomp';
-import { HEADER_SIZE } from 'internal/arraybuffer';
 
 const RELEASE: bool = true;
 
@@ -41,11 +40,11 @@ const RELEASE: bool = true;
 }
 
 function load64_be(x: Uint8Array, offset: isize): u64 {
-    return bswap(load<u64>(x.buffer.data + offset));
+    return bswap(load<u64>(x.dataStart + offset));
 }
 
 function store64_be(x: Uint8Array, offset: isize, u: u64): void {
-    store<u64>(x.buffer.data + offset, bswap(u));
+    store<u64>(x.dataStart + offset, bswap(u));
 }
 
 const K: u64[] = [
@@ -573,7 +572,7 @@ function fe25519Pack(o: Fe25519Packed, n: Fe25519): void {
 }
 
 function fe25519Unpack(o: Fe25519, n: Fe25519Packed): void {
-    let nb = changetype<usize>(n.buffer) + HEADER_SIZE;
+    let nb = n.dataStart
     for (let i = 0; i < 16; ++i) {
         o[i] = load<u16>(nb + 2 * i) as i64;
     }
@@ -1328,6 +1327,8 @@ function _signVerifyDetached(sig: Signature, m: Uint8Array, pk: GePacked): bool 
 
 // Exported API
 
+@global export const Uint8Array_ID = idof<Uint8Array>()
+
 /**
  * Signature size, in bytes
  */
@@ -1646,7 +1647,7 @@ function _signVerifyDetached(sig: Signature, m: Uint8Array, pk: GePacked): bool 
 
     hashUpdate(st, m);
 
-    return hashFinal(st);
+    return new Uint8Array(2);
 }
 
 /**
