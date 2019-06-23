@@ -1647,7 +1647,7 @@ function _signVerifyDetached(sig: Signature, m: Uint8Array, pk: GePacked): bool 
 
     hashUpdate(st, m);
 
-    return new Uint8Array(2);
+    return hashFinal(st);
 }
 
 /**
