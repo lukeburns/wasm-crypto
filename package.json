@@ -6,6 +6,7 @@
         "asbuild:small": "asc assembly/index.ts assembly/crypto.ts assembly/precomp.ts -b build/small.wasm -t build/small.wat --sourceMap --validate -O3z --importMemory",
         "asbuild:optimized": "asc assembly/index.ts assembly/crypto.ts assembly/precomp.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate -O3 --importMemory",
         "build": "npm run asbuild:optimized",
+        "install": "npm run-script build",
         "test": "asp"
     },
     "main": "index.js",
